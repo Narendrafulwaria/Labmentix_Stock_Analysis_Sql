@@ -6,7 +6,7 @@ This design supports the goal in `problemstatement.md`: load six daily equity CS
 
 The system is a single MySQL database with three layers.
 
-1. **Source.** Six CSV files in this folder, one company each, newest date first.
+1. **Source.** Six CSV files in the `data` folder, one company each, newest date first.
 2. **Staging.** One raw table that accepts the CSV text as loaded, including the original date string and the source file name.
 3. **Analysis model.** A company dimension and a daily price fact table. All analysis queries read only these two tables.
 

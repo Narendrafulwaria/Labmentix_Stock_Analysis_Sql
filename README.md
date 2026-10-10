@@ -8,12 +8,12 @@ Prices stay as recorded in the source files. They are not adjusted for splits, b
 
 | File | Company | Sector | Trading days |
 | --- | --- | --- | --- |
-| `Bajaj Auto.csv` | Bajaj Auto | Auto | 889 |
-| `Eicher Motors.csv` | Eicher Motors | Auto | 889 |
-| `Hero Motocorp.csv` | Hero Motocorp | Auto | 889 |
-| `TVS Motors.csv` | TVS Motors | Auto | 889 |
-| `TCS.csv` | TCS | IT | 889 |
-| `Infosys.csv` | Infosys | IT | 889 |
+| `data/Bajaj Auto.csv` | Bajaj Auto | Auto | 889 |
+| `data/Eicher Motors.csv` | Eicher Motors | Auto | 889 |
+| `data/Hero Motocorp.csv` | Hero Motocorp | Auto | 889 |
+| `data/TVS Motors.csv` | TVS Motors | Auto | 889 |
+| `data/TCS.csv` | TCS | IT | 889 |
+| `data/Infosys.csv` | Infosys | IT | 889 |
 
 Each CSV is newest-date first and has open, high, low, close, weighted average price, shares, trades, turnover, deliverable quantity, delivery percentage, and the high-low and close-open spreads. Six source rows have a blank deliverable quantity and delivery percentage. Those values are stored as `NULL`.
 
@@ -35,7 +35,7 @@ Each CSV is newest-date first and has open, high, low, close, weighted average p
 | `architecture.md` | Database design: staging, `companies`, and `daily_prices` |
 | `implementation.md` | Build steps. Each task ends in a query, with the expected result in the comment above it |
 | `equity_analysis_report.docx` | Written findings taken from those result sets |
-| `*.csv` | Source history, one company per file |
+| `data/*.csv` | Source history, one company per file |
 
 ## Database
 
@@ -62,7 +62,7 @@ analysis queries
 Run the tasks in `implementation.md` in order, from this folder, against a local MySQL server.
 
 1. **Task 1** creates `equity_analysis` and inserts the six companies.
-2. **Task 2** creates `stg_daily_prices` and loads each CSV with `LOAD DATA LOCAL INFILE`. The client must be started with `local-infile` enabled (`mysql --local-infile=1`). Change the file path in each statement to match your clone of this repository. `source_file` must match `companies.source_file` exactly.
+2. **Task 2** creates `stg_daily_prices` and loads each CSV from `data/` with `LOAD DATA LOCAL INFILE`. The client must be started with `local-infile` enabled (`mysql --local-infile=1`). Change the file path in each statement to match your clone of this repository. `source_file` stays the file name only, such as `Bajaj Auto.csv`, and must match `companies.source_file` exactly.
 3. **Task 3** casts staging into `daily_prices`. Empty delivery fields become `NULL`. A correct load is **5,334** rows and **6** null delivery rows.
 4. **Task 4** checks 889 rows per company, the date span `2015-01-01` to `2018-07-31`, no duplicate company-dates, no invalid high-low ranges, and the six blank delivery days.
 5. **Tasks 5–11** are the analysis queries. Compare each result with the comment block directly above that query.

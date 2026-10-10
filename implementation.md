@@ -54,7 +54,7 @@ ORDER BY company_id;
 
 Staging keeps every CSV field as text. `source_file` must match `companies.source_file` exactly.
 
-The session needs local file loading (`mysql --local-infile=1`). Repeat the `LOAD DATA` once per file, changing the path and the `SET source_file` value. The six files are `Bajaj Auto.csv`, `Eicher Motors.csv`, `Hero Motocorp.csv`, `TVS Motors.csv`, `TCS.csv`, and `Infosys.csv`.
+The session needs local file loading (`mysql --local-infile=1`). Repeat the `LOAD DATA` once per file, changing the path and the `SET source_file` value. The six files are in `data/`: `Bajaj Auto.csv`, `Eicher Motors.csv`, `Hero Motocorp.csv`, `TVS Motors.csv`, `TCS.csv`, and `Infosys.csv`. `source_file` is the file name only, without the `data/` folder.
 
 ```sql
 CREATE TABLE stg_daily_prices (
@@ -74,7 +74,7 @@ CREATE TABLE stg_daily_prices (
   spread_close_open  VARCHAR(32) NOT NULL
 );
 
-LOAD DATA LOCAL INFILE 'C:/Users/dell/OneDrive/Desktop/Labmentix/sql/Bajaj Auto.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/dell/OneDrive/Desktop/Labmentix/sql/data/Bajaj Auto.csv'
 INTO TABLE stg_daily_prices
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
